@@ -1,0 +1,6 @@
+[book]
+authors = ["Justus K"]
+language = "en"
+multilingual = false
+src = "src"
+title = "Bastion"
