@@ -8,13 +8,13 @@ It supplies actor-model-like concurrency with a lightweight process implementati
 
 We use [**Discord**][Discord] for development discussions. Also please don't hesitate to open issues on [**GitHub**][GitHub], ask for features, report bugs, comment on design and more! More interaction and more ideas are better!
 
-## Contributing to Bastion Open Source Helpers
+## Contributing to Bastion
 
 All contributions, bug reports, bug fixes, documentation improvements, enhancements and ideas are welcome.
 
 A detailed overview on how to contribute can be found in the [**CONTRIBUTING guide**][contribution] on GitHub.
 
-Like bastion, this book is fault-tolerant and open source. If you find something wrong or a typo, [**send us a pull request!**][book-repo]
+Like bastion, this book is open-source. If you find something wrong or a typo, [**send us a pull request!**][book-repo]
 
 ## License
 
