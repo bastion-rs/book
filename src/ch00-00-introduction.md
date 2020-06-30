@@ -2,11 +2,11 @@
 
 This book will introduce you Bastion, a highly-available, fault-tolerant runtime system with dynamic, dispatch-oriented, lightweight process model.
 
-It supplies actor-model-like concurrency with a lightweight process implementation and utilizes all of the system resources efficiently guaranteeing of at-most-once message delivery.
+It supplies actor-model-like concurrency with a lightweight process implementation and utilizes all of the system resources efficiently guaranteeing at-most-once message delivery.
 
 ## Discussion and Development
 
-We use [**Discord**][Discord] for development discussions. Also please don't hesitate to open issues on [**GitHub**][GitHub] ask for features, report bugs, comment on design and more! More interaction and more ideas are better!
+We use [**Discord**][Discord] for development discussions. Also please don't hesitate to open issues on [**GitHub**][GitHub], ask for features, report bugs, comment on design and more! More interaction and more ideas are better!
 
 ## Contributing to Bastion Open Source Helpers
 
