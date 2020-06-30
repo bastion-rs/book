@@ -14,7 +14,7 @@ All contributions, bug reports, bug fixes, documentation improvements, enhanceme
 
 A detailed overview on how to contribute can be found in the [**CONTRIBUTING guide**][contribution] on GitHub.
 
-Like bastion, this book is fault-tolerant and open source. If you find something wrong or a typo, [**send us a pull request!**][book-repo]
+Like bastion, this book is open-source. If you find something wrong or a typo, [**send us a pull request!**][book-repo]
 
 ## License
 
