@@ -1,6 +1,6 @@
 # Bastion
 
-This book will introduce you Bastion, a highly-available, fault-tolerant runtime system with dynamic, dispatch-oriented, lightweight process model.
+This book will introduce you to Bastion, a highly-available, fault-tolerant runtime system with dynamic, dispatch-oriented, lightweight process model.
 
 It supplies actor-model-like concurrency with a lightweight process implementation and utilizes all of the system resources efficiently guaranteeing at-most-once message delivery.
 
