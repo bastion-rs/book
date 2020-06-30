@@ -8,7 +8,7 @@ It supplies actor-model-like concurrency with a lightweight process implementati
 
 We use [**Discord**][Discord] for development discussions. Also please don't hesitate to open issues on [**GitHub**][GitHub] ask for features, report bugs, comment on design and more! More interaction and more ideas are better!
 
-## Contributing to Bastion Open Source Helpers
+## Contributing to Bastion
 
 All contributions, bug reports, bug fixes, documentation improvements, enhancements and ideas are welcome.
 
