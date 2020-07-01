@@ -1,6 +1,5 @@
 # Bastion-rs
 
-[The Bastion project](title-page.md)
 [Introduction](ch00-00-introduction.md)
 
 ## Getting started
