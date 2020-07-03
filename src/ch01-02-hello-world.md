@@ -1,1 +1,0 @@
-The classical and unavoidable hello, world!

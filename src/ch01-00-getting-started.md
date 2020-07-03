@@ -8,4 +8,11 @@ In this first chapter, we will talking about:
 
 Don't forget, if you have any question, you can find us on [Discord][]!
 
+## Installation
+
+Bastion is a library which need to be added as a dependency to your project. For that, you just have to add it as follow to your `Cargo.toml`:
+```rs
+bastion = "0.3.5-alpha"
+```
+
 [Discord]: https://discord.gg/DqRqtRT
