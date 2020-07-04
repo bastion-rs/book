@@ -4,7 +4,7 @@ Let's start our journey with Bastion. During it we will see the main features, w
 
 In this first chapter, we will talk about:
 - Installing Bastion on your project
-- Classic and timeless: hello, world!
+- The Classic and timeless: hello, world!
 
 ## Installation
 
