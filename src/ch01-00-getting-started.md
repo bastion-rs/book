@@ -12,7 +12,7 @@ Bastion is a library which need to be added as a dependency to your project. For
 ```rs
 bastion = "0.3.5-alpha"
 ```
-
+You can also use [cargo-edit](https://github.com/killercup/cargo-edit) and run `cargo add bastion` in a shell.
 ## Hello, world!
 The most classic of all examples and especially the essential hello, world! Only for you, in Bastion.
 ```rs
