@@ -2,7 +2,7 @@
 
 Let's start our journey with Bastion. During it we will see the main features, we have a lot to discover. For that we will follow a theme, we will build a small [CRUD application](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete).
 
-In this first chapter, we will talking about:
+In this first chapter, we will talk about:
 - Installing Bastion on your project
 - Classic and timeless: hello, world!
 
