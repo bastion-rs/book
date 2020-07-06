@@ -16,38 +16,48 @@ You can also use [cargo-edit][] and run `cargo add bastion` in a shell.
 ## Hello, world!
 The most classic of all examples and especially the essential hello, world! Only for you, in Bastion.
 ```rs
+use bastion::prelude::*;
+
 fn main() {
     // We need bastion to run our program
     Bastion::init();
-    // We are starting the Bastion program now
     Bastion::start();
-    // We are creating the group of children which will received the message
-    let children = Bastion::children(|children| {
-        // We create the function to exec
+    // We are creating a group of children
+    let workers = Bastion::children(|children| {
+        // We are creating the function to exec
         children.with_exec(|ctx: BastionContext| {
             async move {
+                // We are defining a behavior when a msg is received
                 msg! {
-                  // We are waiting a msg
-                  ctx.recv().await?,
-                  ref msg: &'static str => {
-                    // We are logging the msg broadcasted bellow
-                    println!("{}", msg);
-                  };
-                  _: _ => ();
+                    // We are waiting a msg
+                    ctx.recv().await?,
+                    // We are catching a msg
+                    msg: &'static str =!> {
+                        // Printing the incoming msg
+                        println!("{}", msg);
+                        // Sending the asnwer
+                        answer!(ctx, msg).expect("couldn't reply :(");
+                    };
+                    _: _ => ();
                 }
-                // We are stopping bastion here
-                Bastion::stop();
                 Ok(())
             }
         })
     })
     .expect("Couldn't create the children group.");
-    // We are creating the message to broadcast to the children group
-    children
-        .broadcast("Hello, world!")
-        .expect("Couldn't broadcast the message.");
-    // We are waiting until the Bastion has stopped or got killed
-    Bastion::block_until_stopped();
+    // We are creating the asker
+    let asker = async {
+        // We are getting the first (and only) worker
+        let answer = workers.elems()[0]
+            .ask_anonymously("hello, world!")
+            .expect("Couldn't send the message.");
+        // We are waiting for the asnwer
+        answer.await.expect("couldn't receive answer");
+    };
+    // We are running the asker in the current blocked thread
+    run!(asker);
+    // We are stopping bastion here
+    Bastion::stop();
 }
 ```
 
