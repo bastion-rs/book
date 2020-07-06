@@ -91,7 +91,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">The Bastion project</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">Introduction</a></li><li class="chapter-item expanded "><a href="ch01-00-getting-started.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="ch01-02-hello-world.html"><strong aria-hidden="true">1.2.</strong> Hello, world!</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="ch01-00-getting-started.html">Getting Started</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -158,8 +158,6 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#bastion" id="bastion">Bastion</a></h1>
-<h2><a class="header" href="#highly-available-distributed-fault-tolerant-runtime" id="highly-available-distributed-fault-tolerant-runtime">Highly-available Distributed Fault-tolerant Runtime</a></h2>
-<h1><a class="header" href="#bastion-1" id="bastion-1">Bastion</a></h1>
 <p>This book will introduce you to Bastion, a highly-available, fault-tolerant runtime system with dynamic, dispatch-oriented, lightweight process model.</p>
 <p>It supplies actor-model-like concurrency with a lightweight process implementation and utilizes all of the system resources efficiently guaranteeing at-most-once message delivery.</p>
 <h2><a class="header" href="#discussion-and-development" id="discussion-and-development">Discussion and Development</a></h2>
@@ -175,9 +173,65 @@
 <li>MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)</li>
 </ul>
 <p>at your option.</p>
-<p>Explain first section</p>
-<p>How to install bastion</p>
-<p>The classical and unavoidable hello, world!</p>
+<h1><a class="header" href="#getting-started" id="getting-started">Getting started</a></h1>
+<p>Let's start our journey with Bastion. During it we will see the main features, we have a lot to discover. For that we will follow a theme, we will build a small <a href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD application</a>.</p>
+<p>In this first chapter, we will talk about:</p>
+<ul>
+<li>Installing Bastion on your project</li>
+<li>The Classic and timeless: hello, world!</li>
+</ul>
+<h2><a class="header" href="#installation" id="installation">Installation</a></h2>
+<p>Bastion is a library which need to be added as a dependency to your project. For that, you just have to add it as follow to your <code>Cargo.toml</code>:</p>
+<pre><code class="language-rs">bastion = &quot;0.3.5-alpha&quot;
+</code></pre>
+<p>You can also use <a href="https://github.com/killercup/cargo-edit">cargo-edit</a> and run <code>cargo add bastion</code> in a shell.</p>
+<h2><a class="header" href="#hello-world" id="hello-world">Hello, world!</a></h2>
+<p>The most classic of all examples and especially the essential hello, world! Only for you, in Bastion.</p>
+<pre><code class="language-rs">use bastion::prelude::*;
+
+fn main() {
+    // We need bastion to run our program
+    Bastion::init();
+    Bastion::start();
+    // We are creating a group of children
+    let workers = Bastion::children(|children| {
+        // We are creating the function to exec
+        children.with_exec(|ctx: BastionContext| {
+            async move {
+                // We are defining a behavior when a msg is received
+                msg! {
+                    // We are waiting a msg
+                    ctx.recv().await?,
+                    // We are catching a msg
+                    msg: &amp;'static str =!&gt; {
+                        // Printing the incoming msg
+                        println!(&quot;{}&quot;, msg);
+                        // Sending the asnwer
+                        answer!(ctx, msg).expect(&quot;couldn't reply :(&quot;);
+                    };
+                    _: _ =&gt; ();
+                }
+                Ok(())
+            }
+        })
+    })
+    .expect(&quot;Couldn't create the children group.&quot;);
+    // We are creating the asker
+    let asker = async {
+        // We are getting the first (and only) worker
+        let answer = workers.elems()[0]
+            .ask_anonymously(&quot;hello, world!&quot;)
+            .expect(&quot;Couldn't send the message.&quot;);
+        // We are waiting for the asnwer
+        answer.await.expect(&quot;couldn't receive answer&quot;);
+    };
+    // We are running the asker in the current blocked thread
+    run!(asker);
+    // We are stopping bastion here
+    Bastion::stop();
+}
+</code></pre>
+<p>Don't forget, if you have any question, you can find us on <a href="https://discord.gg/DqRqtRT">Discord</a>!</p>
 
                     </main>
 
