@@ -9,12 +9,16 @@ In this first chapter, we will talk about:
 ## Installation
 
 Bastion is a library which need to be added as a dependency to your project. For that, you just have to add it as follow to your `Cargo.toml`:
+
 ```rs
 bastion = "0.3.5-alpha"
 ```
 You can also use [cargo-edit][] and run `cargo add bastion` in a shell.
+
 ## Hello, world!
+
 The most classic of all examples and especially the essential hello, world! Only for you, in Bastion.
+
 ```rs
 use bastion::prelude::*;
 
