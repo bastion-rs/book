@@ -19,12 +19,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        
         <link rel="icon" href="favicon.svg">
+        
+        
         <link rel="shortcut icon" href="favicon.png">
+        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
+        
         <link rel="stylesheet" href="css/print.css" media="print">
+        
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
@@ -126,9 +132,11 @@
                     <h1 class="menu-title">Bastion</h1>
 
                     <div class="right-buttons">
+                        
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        
                         
                     </div>
                 </div>
@@ -157,77 +165,73 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#bastion" id="bastion">Bastion</a></h1>
+                        <h1 id="bastion"><a class="header" href="#bastion">Bastion</a></h1>
 <p>This book will introduce you to Bastion, a highly-available, fault-tolerant runtime system with dynamic, dispatch-oriented, lightweight process model.</p>
 <p>It supplies actor-model-like concurrency with a lightweight process implementation and utilizes all of the system resources efficiently guaranteeing at-most-once message delivery.</p>
-<h2><a class="header" href="#discussion-and-development" id="discussion-and-development">Discussion and Development</a></h2>
+<h2 id="discussion-and-development"><a class="header" href="#discussion-and-development">Discussion and Development</a></h2>
 <p>We use <a href="https://discord.gg/DqRqtRT"><strong>Discord</strong></a> for development discussions. Also please don't hesitate to open issues on <a href="https://github.com/bastion-rs/bastion"><strong>GitHub</strong></a>, ask for features, report bugs, comment on design and more! More interaction and more ideas are better!</p>
-<h2><a class="header" href="#contributing-to-bastion" id="contributing-to-bastion">Contributing to Bastion</a></h2>
+<h2 id="contributing-to-bastion"><a class="header" href="#contributing-to-bastion">Contributing to Bastion</a></h2>
 <p>All contributions, bug reports, bug fixes, documentation improvements, enhancements and ideas are welcome.</p>
 <p>A detailed overview on how to contribute can be found in the <a href="https://github.com/bastion-rs/.github/blob/master/CONTRIBUTING.md"><strong>CONTRIBUTING guide</strong></a> on GitHub.</p>
 <p>Like bastion, this book is open-source. If you find something wrong or a typo, <a href="https://github.com/bastion-rs/book"><strong>send us a pull request!</strong></a></p>
-<h2><a class="header" href="#license" id="license">License</a></h2>
+<h2 id="license"><a class="header" href="#license">License</a></h2>
 <p>Licensed under either of:</p>
 <ul>
 <li>Apache License, Version 2.0 (LICENSE-APACHE or http://www.apache.org/licenses/LICENSE-2.0)</li>
 <li>MIT license (LICENSE-MIT or http://opensource.org/licenses/MIT)</li>
 </ul>
 <p>at your option.</p>
-<h1><a class="header" href="#getting-started" id="getting-started">Getting started</a></h1>
+<h1 id="getting-started"><a class="header" href="#getting-started">Getting started</a></h1>
 <p>Let's start our journey with Bastion. During it we will see the main features, we have a lot to discover. For that we will follow a theme, we will build a small <a href="https://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD application</a>.</p>
 <p>In this first chapter, we will talk about:</p>
 <ul>
 <li>Installing Bastion on your project</li>
 <li>The Classic and timeless: hello, world!</li>
 </ul>
-<h2><a class="header" href="#installation" id="installation">Installation</a></h2>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
 <p>Bastion is a library which need to be added as a dependency to your project. For that, you just have to add it as follow to your <code>Cargo.toml</code>:</p>
 <pre><code class="language-rs">bastion = &quot;0.3.5-alpha&quot;
 </code></pre>
 <p>You can also use <a href="https://github.com/killercup/cargo-edit">cargo-edit</a> and run <code>cargo add bastion</code> in a shell.</p>
-<h2><a class="header" href="#hello-world" id="hello-world">Hello, world!</a></h2>
+<h2 id="hello-world"><a class="header" href="#hello-world">Hello, world!</a></h2>
 <p>The most classic of all examples and especially the essential hello, world! Only for you, in Bastion.</p>
 <pre><code class="language-rs">use bastion::prelude::*;
 
-fn main() {
-    // We need bastion to run our program
-    Bastion::init();
-    Bastion::start();
-    // We are creating a group of children
-    let workers = Bastion::children(|children| {
-        // We are creating the function to exec
-        children.with_exec(|ctx: BastionContext| {
-            async move {
-                // We are defining a behavior when a msg is received
-                msg! {
-                    // We are waiting a msg
-                    ctx.recv().await?,
-                    // We are catching a msg
-                    msg: &amp;'static str =!&gt; {
-                        // Printing the incoming msg
-                        println!(&quot;{}&quot;, msg);
-                        // Sending the asnwer
-                        answer!(ctx, msg).expect(&quot;couldn't reply :(&quot;);
-                    };
-                    _: _ =&gt; ();
-                }
-                Ok(())
+async fn once_hello_world(ctx: BastionContext) -&gt; Result&lt;(), ()&gt; {
+    MessageHandler::new(ctx.recv().await?)
+        .on_question(|question: &amp;str, sender| {
+            if question == &quot;hi!&quot; {
+                sender
+                    .reply(&quot;hello, world!&quot;)
+                    .expect(&quot;Failed to reply to sender&quot;);
+            } else {
+                panic!(&quot;Expected string `hi!`, found `{}`&quot;, question);
             }
         })
+        .on_fallback(|v, addr| panic!(&quot;Wrong message from {:?}: got {:?}&quot;, addr, v));
+    Ok(())
+}
+
+fn main() {
+    Bastion::init();
+    Bastion::start();
+
+    Bastion::children(|children| {
+        children
+            .with_distributor(Distributor::named(&quot;say_hi&quot;))
+            .with_exec(once_hello_world)
     })
     .expect(&quot;Couldn't create the children group.&quot;);
-    // We are creating the asker
-    let asker = async {
-        // We are getting the first (and only) worker
-        let answer = workers.elems()[0]
-            .ask_anonymously(&quot;hello, world!&quot;)
-            .expect(&quot;Couldn't send the message.&quot;);
-        // We are waiting for the asnwer
-        answer.await.expect(&quot;couldn't receive answer&quot;);
-    };
-    // We are running the asker in the current blocked thread
-    run!(asker);
-    // We are stopping bastion here
+
+    let say_hi = Distributor::named(&quot;say_hi&quot;);
+
+    run!(async {
+        let answer: Result&lt;&amp;str, SendError&gt; =
+            say_hi.request(&quot;hi!&quot;).await.expect(&quot;Couldn't send request&quot;);
+
+        println!(&quot;{}&quot;, answer.expect(&quot;Couldn't receive answer&quot;))
+    });
+
     Bastion::stop();
 }
 </code></pre>
