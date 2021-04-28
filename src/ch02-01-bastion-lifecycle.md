@@ -13,6 +13,7 @@ use bastion::prelude::*;
 
 fn main() {
     Bastion::init();
+
     // Some stuff have to be write after... but not yet!
 }
 ```
@@ -25,16 +26,100 @@ use bastion::prelude::*;
 fn main() {
     let config = Config::new().hide_backtraces();
     Bastion::init_with(config);
+
     // Some stuff have to be write after... but not yet!
 }
 ```
 
-*`Backtraces`: Appendix - Definition
-
 ## Start
+
+After initialize bastion you will have to start it by using `Bastion::start();`.
+
+```rs
+use bastion::prelude::*;
+
+fn main() {
+    Bastion::init();
+    Bastion::start();
+
+    // Some stuff have to be write after... but not yet!
+}
+```
 
 ## Block
 
+As with any application, there will be a point where you want to stop it running. But this time might not occur in your `main()` function. This can happen elsewhere in your code.
+
+Bastion provide `Bastion::block_until_stopped()`. It will block the current thread until the system is stopped (either by calling `Bastion::stop()` or `Bastion::kill()`).
+
+```rs
+use bastion::prelude::*;
+
+fn main() {
+    Bastion::init();
+    Bastion::start();
+
+    // Some stuff have to be write after... but not yet!
+
+    Bastion::block_until_stopped();
+}
+```
+
 ## Stop
 
+Now you are to the point where you want to stop your application running. You can use `Bastion::stop()`.
+
+It will send a message to the whole system to tell it to stop properly every running children groups and supervisors.
+
+```rs
+use bastion::prelude::*;
+
+fn main() {
+    Bastion::init();
+    Bastion::start();
+
+    // Some stuff have to be write after... but not yet!
+
+    Bastion::stop();
+}
+```
+
+As we said in the `Block` section of this chapter you may want to stop the application in an other part of your code. Here we will stop our bastion after the execution of `stop_me_now()`.
+
+```rs
+use bastion::prelude::*;
+
+async fn stop_me_now(_ctx: BastionContext) -> Result<(), ()> {
+    Bastion::stop();
+    Ok(())
+}
+
+fn main() {
+    Bastion::init();
+    Bastion::start();
+
+    Bastion::children(|children| children.with_exec(stop_me_now))
+        .expect("Couldn't create the children group.");
+}
+```
+
+As you may have noticed, we don't use `Bastion::block_until_stopped();` because the execution of `stop_me_now()` is not conditionned. We will talk about it later.
+
 ## Kill
+
+In some case, in unrecoverable cases, you may want to just kill the system and drop all processes in execution. `Bastion::kill();` is made for it.
+
+```rs
+use bastion::prelude::*;
+
+fn main() {
+    Bastion::init();
+    Bastion::start();
+
+    // Some stuff have to be write after... but not yet!
+
+    Bastion::kill();
+}
+```
+
+*`Backtraces`: Appendix - Definition
