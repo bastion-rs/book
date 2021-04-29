@@ -1,4 +1,4 @@
-# Bastion lifecycle
+# Make Bastion working
 
 ## Initialize
 
