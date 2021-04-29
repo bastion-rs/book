@@ -2,7 +2,7 @@
 
 ## Initialize
 
-Bastion require to be initialized. You can init it with the default configuration or with a custom one. A custom configuration will allow you to override the `Backtraces`* system
+Bastion require to be initialized. You can init it with the default configuration or with a custom one. A custom configuration will allow you to override the `Backtraces`\* system
 
 Enabled by default, a custom configuration will allow you to override it and enable or disable the `Backtraces`.
 
@@ -122,4 +122,4 @@ fn main() {
 }
 ```
 
-*`Backtraces`: Appendix - Definition
+\*`Backtraces`: Appendix - Definition
