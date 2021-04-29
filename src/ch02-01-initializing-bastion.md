@@ -1,4 +1,4 @@
-# Make Bastion working
+# Initializing Bastion
 
 ## Initialize
 
