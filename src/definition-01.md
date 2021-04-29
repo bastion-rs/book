@@ -36,7 +36,7 @@ use bastion::prelude::*;
 fn main() {
     let config = Config::new().hide_backtraces();
     Bastion::init_with(config);
-    
+
     panic!("Normal panic");
 }
 ```
