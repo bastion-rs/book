@@ -33,7 +33,7 @@ fn main() {
 
 ## Start
 
-After initialize bastion you will have to start it by using `Bastion::start();`.
+After you initialize bastion you will have to start it by using `Bastion::start();`.
 
 ```rs
 use bastion::prelude::*;
