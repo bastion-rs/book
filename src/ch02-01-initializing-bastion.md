@@ -116,7 +116,7 @@ fn main() {
     Bastion::init();
     Bastion::start();
 
-    // Some stuff have to be write after... but not yet!
+    // Some stuff have to be written later... but not yet!
 
     Bastion::kill();
 }
