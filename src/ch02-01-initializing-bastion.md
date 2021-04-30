@@ -27,7 +27,7 @@ fn main() {
     let config = Config::new().hide_backtraces();
     Bastion::init_with(config);
 
-    // Some stuff have to be write after... but not yet!
+    // Some stuff have to be written later... but not yet!
 }
 ```
 
