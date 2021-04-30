@@ -69,7 +69,7 @@ fn main() {
 
 At this point you might want to stop the bastion. You can use `Bastion::stop()`.
 
-It will send a message to the whole system to tell it to stop properly every running children groups and supervisors.
+It will send a message to the whole system to tell it to gracefully stop each running children groups and supervisors.
 
 ```rs
 use bastion::prelude::*;
