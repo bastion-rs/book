@@ -1,4 +1,4 @@
-# Definition
+# Definitions
 
 Quick reminder to some notion that you will encounter.
 
