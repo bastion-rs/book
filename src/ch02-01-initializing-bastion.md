@@ -48,7 +48,7 @@ fn main() {
 
 ## Block
 
-As with any application, there will be a point where you want to stop it running. But this time might not occur in your `main()` function. This can happen elsewhere in your code.
+As with any application, there will be a point where you want it to stop. But this time might not occur in your `main()` function. This can happen anywhere in your code.
 
 Bastion provide `Bastion::block_until_stopped()`. It will block the current thread until the system is stopped (either by calling `Bastion::stop()` or `Bastion::kill()`).
 
