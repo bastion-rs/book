@@ -163,46 +163,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="definitions"><a class="header" href="#definitions">Definitions</a></h1>
-<p>Quick explanation of some words you will encounter.</p>
-<h2 id="backtraces"><a class="header" href="#backtraces">Backtraces</a></h2>
-<blockquote>
-<p>To find the cause of something by examining past events.</p>
-</blockquote>
-<p>In bastion we can override the rust backtrace to disable it.</p>
-<ul>
-<li>Backtrace enabled</li>
-</ul>
-<pre><code class="language-rs">use bastion::prelude::*;
-
-fn main() {
-    Bastion::init();
-
-    panic!(&quot;Normal panic&quot;);
-}
-</code></pre>
-<pre><code>   Compiling bastion v0.4.5-alpha.0 (/home/bastion/src/bastion)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.79s
-     Running `target/debug/examples/show_backtraces`
-thread 'main' panicked at 'Normal panic', src/bastion/examples/show_backtraces.rs:6:5
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-</code></pre>
-<ul>
-<li>Backtrace disabled</li>
-</ul>
-<pre><code class="language-rs">use bastion::prelude::*;
-
-fn main() {
-    let config = Config::new().hide_backtraces();
-    Bastion::init_with(config);
-
-    panic!(&quot;Normal panic&quot;);
-}
-</code></pre>
-<pre><code>   Compiling bastion v0.4.5-alpha.0 (/home/bastion/src/bastion)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.79s
-     Running `target/debug/examples/hide_backtraces`
-</code></pre>
+                        <h1 id="definition"><a class="header" href="#definition">Definition</a></h1>
 
                     </main>
 
