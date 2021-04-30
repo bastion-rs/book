@@ -84,7 +84,7 @@ fn main() {
 }
 ```
 
-As we said in the `Block` section of this chapter you may want to stop the application in an other part of your code. Here we will stop our bastion after the execution of `stop_me_now()`.
+As we said in the `Block` section of this chapter you may want to stop the application anywhere in your code. Here we will stop our bastion after the execution of `stop_me_now()`.
 
 ```rs
 use bastion::prelude::*;
