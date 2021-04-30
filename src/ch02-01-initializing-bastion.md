@@ -67,7 +67,7 @@ fn main() {
 
 ## Stop
 
-Now you are to the point where you want to stop your application running. You can use `Bastion::stop()`.
+At this point you might want to stop the bastion. You can use `Bastion::stop()`.
 
 It will send a message to the whole system to tell it to stop properly every running children groups and supervisors.
 
