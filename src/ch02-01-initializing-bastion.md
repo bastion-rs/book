@@ -14,7 +14,7 @@ use bastion::prelude::*;
 fn main() {
     Bastion::init();
 
-    // Some stuff have to be write after... but not yet!
+    // Some stuff have to be written later... but not yet!
 }
 ```
 
@@ -27,13 +27,13 @@ fn main() {
     let config = Config::new().hide_backtraces();
     Bastion::init_with(config);
 
-    // Some stuff have to be write after... but not yet!
+    // Some stuff have to be written later... but not yet!
 }
 ```
 
 ## Start
 
-After initialize bastion you will have to start it by using `Bastion::start();`.
+After you initialize bastion you will have to start it by using `Bastion::start();`.
 
 ```rs
 use bastion::prelude::*;
@@ -42,13 +42,13 @@ fn main() {
     Bastion::init();
     Bastion::start();
 
-    // Some stuff have to be write after... but not yet!
+    // Some stuff have to be written later... but not yet!
 }
 ```
 
 ## Block
 
-As with any application, there will be a point where you want to stop it running. But this time might not occur in your `main()` function. This can happen elsewhere in your code.
+As with any application, there will be a point where you want it to stop. But this time might not occur in your `main()` function. This can happen anywhere in your code.
 
 Bastion provide `Bastion::block_until_stopped()`. It will block the current thread until the system is stopped (either by calling `Bastion::stop()` or `Bastion::kill()`).
 
@@ -59,7 +59,7 @@ fn main() {
     Bastion::init();
     Bastion::start();
 
-    // Some stuff have to be write after... but not yet!
+    // Some stuff have to be written later... but not yet!
 
     Bastion::block_until_stopped();
 }
@@ -67,9 +67,9 @@ fn main() {
 
 ## Stop
 
-Now you are to the point where you want to stop your application running. You can use `Bastion::stop()`.
+At this point you might want to stop the bastion. You can use `Bastion::stop()`.
 
-It will send a message to the whole system to tell it to stop properly every running children groups and supervisors.
+It will send a message to the whole system to tell it to gracefully stop each running children groups and supervisors.
 
 ```rs
 use bastion::prelude::*;
@@ -78,13 +78,13 @@ fn main() {
     Bastion::init();
     Bastion::start();
 
-    // Some stuff have to be write after... but not yet!
+    // Some stuff have to be written later... but not yet!
 
     Bastion::stop();
 }
 ```
 
-As we said in the `Block` section of this chapter you may want to stop the application in an other part of your code. Here we will stop our bastion after the execution of `stop_me_now()`.
+As we said in the `Block` section of this chapter you may want to stop the application anywhere in your code. Here we will stop our bastion after the execution of `stop_me_now()`.
 
 ```rs
 use bastion::prelude::*;
@@ -116,7 +116,7 @@ fn main() {
     Bastion::init();
     Bastion::start();
 
-    // Some stuff have to be write after... but not yet!
+    // Some stuff have to be written later... but not yet!
 
     Bastion::kill();
 }
