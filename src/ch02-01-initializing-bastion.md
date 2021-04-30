@@ -103,7 +103,7 @@ fn main() {
 }
 ```
 
-As you may have noticed, we don't use `Bastion::block_until_stopped();` because the execution of `stop_me_now()` is not conditionned. We will talk about it later.
+As you may have noticed, we don't `block_until_stopped();` because the children's `with_exec` task will complete immediately. There's nothing to wait for.
 
 ## Kill
 
