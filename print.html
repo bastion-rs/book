@@ -97,7 +97,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">Introduction</a></li><li class="chapter-item expanded affix "><a href="ch01-00-getting-started.html">Getting Started</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="ch00-00-introduction.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="ch01-00-getting-started.html"><strong aria-hidden="true">2.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="ch02-00-how-to.html"><strong aria-hidden="true">3.</strong> How to</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch02-01-initializing-bastion.html"><strong aria-hidden="true">3.1.</strong> Make Bastion working</a></li></ol></li><li class="chapter-item expanded "><a href="appendix-00.html"><strong aria-hidden="true">4.</strong> Appendix</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="definition-01.html"><strong aria-hidden="true">4.1.</strong> Definition</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -236,6 +236,147 @@ fn main() {
 }
 </code></pre>
 <p>Don't forget, if you have any question, you can find us on <a href="https://discord.gg/DqRqtRT">Discord</a>!</p>
+<h1 id="how-to"><a class="header" href="#how-to">How to</a></h1>
+<p>In this section we will talk about the principal features of bastion, with a functional approach.</p>
+<h1 id="initializing-bastion"><a class="header" href="#initializing-bastion">Initializing Bastion</a></h1>
+<h2 id="initialize"><a class="header" href="#initialize">Initialize</a></h2>
+<p>Bastion needs to be initialized. You can initialize it with the default configuration or with a custom one. A custom configuration will allow you to override the <code>Backtraces</code>* system</p>
+<p>Enabled by default, a custom configuration will allow you to override it and enable or disable the <code>Backtraces</code>.</p>
+<ul>
+<li>Default configuration</li>
+</ul>
+<pre><code class="language-rs">use bastion::prelude::*;
+
+fn main() {
+    Bastion::init();
+
+    // Some stuff have to be written later... but not yet!
+}
+</code></pre>
+<ul>
+<li>Custom configuration, we are hidding the backtraces here, you can still use <code>show_backtraces();</code> to enable it.</li>
+</ul>
+<pre><code class="language-rs">use bastion::prelude::*;
+
+fn main() {
+    let config = Config::new().hide_backtraces();
+    Bastion::init_with(config);
+
+    // Some stuff have to be written later... but not yet!
+}
+</code></pre>
+<h2 id="start"><a class="header" href="#start">Start</a></h2>
+<p>After you initialize bastion you will have to start it by using <code>Bastion::start();</code>.</p>
+<pre><code class="language-rs">use bastion::prelude::*;
+
+fn main() {
+    Bastion::init();
+    Bastion::start();
+
+    // Some stuff have to be written later... but not yet!
+}
+</code></pre>
+<h2 id="block"><a class="header" href="#block">Block</a></h2>
+<p>As with any application, there will be a point where you want it to stop. But this time might not occur in your <code>main()</code> function. This can happen anywhere in your code.</p>
+<p>Bastion provide <code>Bastion::block_until_stopped()</code>. It will block the current thread until the system is stopped (either by calling <code>Bastion::stop()</code> or <code>Bastion::kill()</code>).</p>
+<pre><code class="language-rs">use bastion::prelude::*;
+
+fn main() {
+    Bastion::init();
+    Bastion::start();
+
+    // Some stuff have to be written later... but not yet!
+
+    Bastion::block_until_stopped();
+}
+</code></pre>
+<h2 id="stop"><a class="header" href="#stop">Stop</a></h2>
+<p>At this point you might want to stop the bastion. You can use <code>Bastion::stop()</code>.</p>
+<p>It will send a message to the whole system to tell it to gracefully stop each running children groups and supervisors.</p>
+<pre><code class="language-rs">use bastion::prelude::*;
+
+fn main() {
+    Bastion::init();
+    Bastion::start();
+
+    // Some stuff have to be written later... but not yet!
+
+    Bastion::stop();
+}
+</code></pre>
+<p>As we said in the <code>Block</code> section of this chapter you may want to stop the application anywhere in your code. Here we will stop our bastion after the execution of <code>stop_me_now()</code>.</p>
+<pre><code class="language-rs">use bastion::prelude::*;
+
+async fn stop_me_now(_ctx: BastionContext) -&gt; Result&lt;(), ()&gt; {
+    Bastion::stop();
+    Ok(())
+}
+
+fn main() {
+    Bastion::init();
+    Bastion::start();
+
+    Bastion::children(|children| children.with_exec(stop_me_now))
+        .expect(&quot;Couldn't create the children group.&quot;);
+}
+</code></pre>
+<p>As you may have noticed, we don't <code>block_until_stopped();</code> because the children's <code>with_exec</code> task will complete immediately. There's nothing to wait for.</p>
+<h2 id="kill"><a class="header" href="#kill">Kill</a></h2>
+<p>In some case, in unrecoverable cases, you may want to just kill the system and drop all processes in execution. <code>Bastion::kill();</code> is made for it.</p>
+<pre><code class="language-rs">use bastion::prelude::*;
+
+fn main() {
+    Bastion::init();
+    Bastion::start();
+
+    // Some stuff have to be written later... but not yet!
+
+    Bastion::kill();
+}
+</code></pre>
+<p>*<code>Backtraces</code>: Appendix - Definition</p>
+<h1 id="appendix"><a class="header" href="#appendix">Appendix</a></h1>
+<p>The following sections contain reference material you may find useful in Bastion.</p>
+<h1 id="definitions"><a class="header" href="#definitions">Definitions</a></h1>
+<p>Quick explanation of some words you will encounter.</p>
+<h2 id="backtraces"><a class="header" href="#backtraces">Backtraces</a></h2>
+<blockquote>
+<p>To find the cause of something by examining past events.</p>
+</blockquote>
+<p>In bastion we can override the rust backtrace to disable it.</p>
+<ul>
+<li>Backtrace enabled</li>
+</ul>
+<pre><code class="language-rs">use bastion::prelude::*;
+
+fn main() {
+    Bastion::init();
+
+    panic!(&quot;Normal panic&quot;);
+}
+</code></pre>
+<pre><code>   Compiling bastion v0.4.5-alpha.0 (/home/bastion/src/bastion)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.79s
+     Running `target/debug/examples/show_backtraces`
+thread 'main' panicked at 'Normal panic', src/bastion/examples/show_backtraces.rs:6:5
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+</code></pre>
+<ul>
+<li>Backtrace disabled</li>
+</ul>
+<pre><code class="language-rs">use bastion::prelude::*;
+
+fn main() {
+    let config = Config::new().hide_backtraces();
+    Bastion::init_with(config);
+
+    panic!(&quot;Normal panic&quot;);
+}
+</code></pre>
+<pre><code>   Compiling bastion v0.4.5-alpha.0 (/home/bastion/src/bastion)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.79s
+     Running `target/debug/examples/hide_backtraces`
+</code></pre>
 
                     </main>
 
