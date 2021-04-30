@@ -1,6 +1,6 @@
 # Definitions
 
-Quick reminder to some notion that you will encounter.
+Quick explanation of some words you will encounter.
 
 ## Backtraces
 
