@@ -2,7 +2,7 @@
 
 ## Initialize
 
-Bastion needs to be initialized. You can init it with the default configuration or with a custom one. A custom configuration will allow you to override the `Backtraces`\* system
+Bastion needs to be initialized. You can initialize it with the default configuration or with a custom one. A custom configuration will allow you to override the `Backtraces`\* system
 
 Enabled by default, a custom configuration will allow you to override it and enable or disable the `Backtraces`.
 
