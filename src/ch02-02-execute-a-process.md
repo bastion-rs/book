@@ -24,5 +24,4 @@ fn main() {
 }
 ```
 
-\*`Actor Model`: Appendix - Definition
-\*`Future`: Appendix - Definition
+\*`Actor Model`: Appendix - Definition \*`Future`: Appendix - Definition
