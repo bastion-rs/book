@@ -2,6 +2,10 @@
 
 Quick explanation of some words you will encounter.
 
+## Actor Model
+
+TODO
+
 ## Backtraces
 
 > To find the cause of something by examining past events.
@@ -46,3 +50,7 @@ fn main() {
     Finished dev [unoptimized + debuginfo] target(s) in 0.79s
      Running `target/debug/examples/hide_backtraces`
 ```
+
+## Future
+
+TODO
